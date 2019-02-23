@@ -16,7 +16,7 @@ public class RobotDrive {
 		HasBeenStopped = false;
 		LeftMotor = new WPI_TalonSRX(1);
 		RightMotor = new WPI_TalonSRX(0);
-		Limiter = 0.4;
+		Limiter = 0.8;
 		circleIsRunning = false;
 		nextSpeedLevel = 3;
 
@@ -31,11 +31,11 @@ public class RobotDrive {
 				nextSpeedLevel = 3;
 
 			} else if (nextSpeedLevel == 2) {
-				Limiter = 0.25;
+				Limiter = 0.5;
 				nextSpeedLevel = 1;
 
 			} else if (nextSpeedLevel == 3) {
-				Limiter = 0.25;
+				Limiter = 0.8;
 				nextSpeedLevel = 2;
 			}
 
