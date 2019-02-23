@@ -92,6 +92,7 @@ public class Robot extends IterativeRobot {
   public void teleopPeriodic() {
     m_robotdrive.Drive();
     m_robotdrive.Slowtoggle();
+    m_robotdrive.spinForTheBetterSophia();
   }
 
   /**

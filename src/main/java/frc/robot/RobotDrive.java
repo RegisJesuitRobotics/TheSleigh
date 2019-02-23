@@ -2,10 +2,12 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Timer;
+
 public class RobotDrive {
 	WPI_TalonSRX RightMotor, LeftMotor;
 	PlaystationController m_playStationController;
-	boolean HasBeenStopped;
+	boolean HasBeenStopped, circleIsRunning;
 	double Limiter;
 	int nextSpeedLevel;
 
@@ -14,7 +16,8 @@ public class RobotDrive {
 		HasBeenStopped = false;
 		LeftMotor = new WPI_TalonSRX(1);
 		RightMotor = new WPI_TalonSRX(0);
-		Limiter = 0.83245;
+		Limiter = 0.4;
+		circleIsRunning = false;
 		nextSpeedLevel = 3;
 
 	}
@@ -24,15 +27,15 @@ public class RobotDrive {
 		if (m_playStationController.ButtonReleaseTriangle() == true) {
 
 			if (nextSpeedLevel == 1) {
-				Limiter = 0.2;
+				Limiter = 0.25;
 				nextSpeedLevel = 3;
 
 			} else if (nextSpeedLevel == 2) {
-				Limiter = 0.35;
+				Limiter = 0.25;
 				nextSpeedLevel = 1;
 
 			} else if (nextSpeedLevel == 3) {
-				Limiter = 0.83245;
+				Limiter = 0.25;
 				nextSpeedLevel = 2;
 			}
 
@@ -40,7 +43,6 @@ public class RobotDrive {
 	}
 
 	public void Drive() {
-		System.out.println("g1");
 		double RightTrigger = m_playStationController.RightTrigger();
 		double LeftTrigger = m_playStationController.LeftTrigger();
 		double LeftStick = m_playStationController.LeftStickXAxis();
@@ -67,8 +69,22 @@ public class RobotDrive {
 			RightPower = Power;
 			move = "Straight ";
 		}
-		System.out.println("g2");
 		LeftMotor.set(-LeftPower * Limiter);
 		RightMotor.set(RightPower * Limiter);
+	}
+
+	public void spinForTheBetterSophia(){
+
+		if(m_playStationController.ButtonCircleRelease() == true && circleIsRunning == false){
+			circleIsRunning = true;
+			LeftMotor.set(-0.6);
+			RightMotor.set(-0.6);
+			Timer.delay(2);
+			LeftMotor.set(0);
+			RightMotor.set(0);
+			circleIsRunning = false;
+		}
+
+
 	}
 }
